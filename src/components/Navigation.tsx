@@ -21,7 +21,11 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     >
       <Toolbar>
         {leading}
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, fontWeight: "bold" }}
+        >
           {title}
         </Typography>
         {actions}
