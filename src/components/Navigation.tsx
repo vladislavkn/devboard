@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
 
 type NavigationProps = {
   title: string;
@@ -20,7 +20,15 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       }}
     >
       <Toolbar>
-        {leading}
+        <Box
+          sx={{
+            "&:not(:empty)": {
+              mr: 1,
+            },
+          }}
+        >
+          {leading}
+        </Box>
         <Typography
           variant="h6"
           component="div"
