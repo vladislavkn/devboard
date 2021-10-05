@@ -3,6 +3,7 @@ import { CssBaseline, ThemeProvider } from "@material-ui/core";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import client from "./apolloClient";
 import HomeScreen from "./screens/HomeScreen";
+import TagsScreen from "./screens/TagsScreen";
 import theme from "./theme";
 
 const App: React.FC = () => (
@@ -12,6 +13,7 @@ const App: React.FC = () => (
       <BrowserRouter>
         <Switch>
           <Route path="/" exact component={HomeScreen} />
+          <Route path="/tags" exact component={TagsScreen} />
         </Switch>
       </BrowserRouter>
     </ThemeProvider>
