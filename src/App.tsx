@@ -1,36 +1,17 @@
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Icon,
-  Typography,
-  CssBaseline,
-  Box,
-} from "@material-ui/core";
+import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import HomeScreen from "./screens/HomeScreen";
+import theme from "./theme";
 
 const App: React.FC = () => (
-  <Box sx={{ bgcolor: "grey.50", minHeight: "100vh" }}>
+  <ThemeProvider theme={theme}>
     <CssBaseline />
-    <AppBar
-      position="sticky"
-      elevation={0}
-      sx={{
-        bgcolor: "white",
-        color: "grey.800",
-        borderBottom: 1,
-        borderColor: "grey.300",
-      }}
-    >
-      <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          Devboard
-        </Typography>
-        <IconButton size="large" edge="start" color="inherit" aria-label="menu">
-          <Icon>filter_alt</Icon>
-        </IconButton>
-      </Toolbar>
-    </AppBar>
-  </Box>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact component={HomeScreen} />
+      </Switch>
+    </BrowserRouter>
+  </ThemeProvider>
 );
 
 export default App;
