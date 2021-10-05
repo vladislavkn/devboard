@@ -31,6 +31,7 @@ const PostPreviewList: React.FC<PostPreviewListProps> = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            py: 1,
           }}
         >
           <Icon fontSize="small" color="secondary" sx={{ mr: 1 }}>
@@ -47,6 +48,7 @@ const PostPreviewList: React.FC<PostPreviewListProps> = (props) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
+            py: 1,
           }}
         >
           <Icon fontSize="small" color="secondary" sx={{ mr: 1 }}>
