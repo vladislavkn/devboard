@@ -1,4 +1,5 @@
 import { AppBar, Box, Toolbar, Typography } from "@material-ui/core";
+import React, { forwardRef } from "react";
 
 type NavigationProps = {
   title: string;
@@ -7,11 +8,12 @@ type NavigationProps = {
   bottom?: React.ReactNode;
 };
 
-const Navigation: React.FC<NavigationProps> = (props) => {
+const Navigation = forwardRef<HTMLDivElement, NavigationProps>((props, ref) => {
   const { title, leading, actions, bottom } = props;
 
   return (
     <AppBar
+      ref={ref}
       position="sticky"
       elevation={1}
       sx={{
@@ -41,6 +43,6 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       {bottom}
     </AppBar>
   );
-};
+});
 
 export default Navigation;
