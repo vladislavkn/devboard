@@ -1,11 +1,13 @@
 import { Button } from "@material-ui/core";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Navigation from "../components/Navigation";
 import PostPreviewList from "../components/PostPreviewList";
-import useLastPosts from "../hooks/useLastPosts";
+import usePagedQuery from "../hooks/usePagedQuery";
+import queryLastPosts, { QueryLastPosts } from "../queries/queryLastPosts";
 
 const HomeScreen: React.FC = () => {
-  const { data, refresh, fetchMore } = useLastPosts(4);
+  const { data, refresh, fetchMore } =
+    usePagedQuery<QueryLastPosts>(queryLastPosts);
   const history = useHistory();
 
   return (
