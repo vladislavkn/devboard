@@ -12,7 +12,6 @@ import {
   Typography,
   IconButton,
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import { Post } from "../generated/graphql";
 
 type PostPreviewProps = {
