@@ -8,16 +8,16 @@ type TagCardListProps = {
   selectedTagIds: string[];
   onClickTag: (tag: Tag) => void;
   onFetchMore: () => void;
-  onRefresh: () => void;
+  hasMore: boolean;
 };
 
 const TagCardList: React.FC<TagCardListProps> = (props) => {
-  const { tags, selectedTagIds, onRefresh, onFetchMore, onClickTag } = props;
+  const { tags, selectedTagIds, hasMore, onFetchMore, onClickTag } = props;
 
   return (
     <AppInfiniteScroll
       itemsLength={tags.length}
-      onRefresh={onRefresh}
+      hasMore={hasMore}
       onFetchMore={onFetchMore}
     >
       <Grid container sx={{ pt: 1, px: 2 }} spacing={1}>

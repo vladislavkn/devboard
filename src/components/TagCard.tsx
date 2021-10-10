@@ -29,7 +29,11 @@ const TagCard: React.FC<TagCardProps> = (props) => {
     >
       <Typography
         variant="h6"
-        sx={{ color: selected ? tag.textColor : "grey.700" }}
+        noWrap
+        sx={{
+          color: selected ? tag.textColor : "grey.700",
+          textOverflow: "ellipsis",
+        }}
       >
         {tag.name}
       </Typography>

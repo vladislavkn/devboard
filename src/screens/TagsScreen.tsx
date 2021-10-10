@@ -10,10 +10,14 @@ import usePagedQuery from "../hooks/usePagedQuery";
 import queryTags, { QueryTags } from "../queries/queryTags";
 
 const TagsScreen: React.FC = () => {
-  const [swap, setSwap] = useState(true);
+  const [swapValue, setSwapValue] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
-  const { data, refresh, fetchMore } = usePagedQuery<QueryTags>(queryTags);
+  const { data, hasMore, fetchMore, refresh } = usePagedQuery<QueryTags>({
+    query: queryTags,
+    pageSize: 18,
+    hasMore: (result) => result.data.tags.length > 0,
+  });
 
   const handleClickTag = (tag: Tag) => {
     if (selectedTagIds.includes(tag.id))
@@ -29,20 +33,31 @@ const TagsScreen: React.FC = () => {
     );
   }, [search, data]);
 
+  const handleRefresh = () => {
+    refresh();
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <SwapPanel
-        swap={swap}
+        swap={swapValue}
         timeout={250}
         sx={{ minHeight: "56px" }}
         primary={
           <Navigation
+            position="fixed"
             title="Tags"
             leading={<BackButton />}
             actions={
-              <IconButton onClick={() => setSwap(false)}>
-                <Icon>search</Icon>
-              </IconButton>
+              <>
+                <IconButton onClick={() => setSwapValue(false)}>
+                  <Icon>search</Icon>
+                </IconButton>
+                <IconButton onClick={handleRefresh}>
+                  <Icon>refresh</Icon>
+                </IconButton>
+              </>
             }
           />
         }
@@ -51,14 +66,21 @@ const TagsScreen: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onClose={() => {
-              setSwap(true), setSearch("");
+              setSwapValue(true);
+              setSearch("");
+            }}
+            sx={{
+              position: "fixed",
+              left: 0,
+              right: 0,
+              bgcolor: "background.default",
             }}
           />
         }
       />
       <TagCardList
         tags={filteredTags}
-        onRefresh={refresh}
+        hasMore={hasMore}
         onFetchMore={fetchMore}
         onClickTag={handleClickTag}
         selectedTagIds={selectedTagIds}
