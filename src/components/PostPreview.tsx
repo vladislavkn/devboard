@@ -16,11 +16,12 @@ import { Post } from "../generated/graphql";
 
 type PostPreviewProps = {
   post: Post;
+  onClickOpen: () => void;
   sx?: BoxProps["sx"];
 };
 
 const PostPreview: React.FC<PostPreviewProps> = (props) => {
-  const { post, sx } = props;
+  const { post, onClickOpen, sx } = props;
 
   return (
     <Paper square sx={{ bgcolor: "background.paper", ...sx }}>
@@ -61,7 +62,7 @@ const PostPreview: React.FC<PostPreviewProps> = (props) => {
         </IconButton>
 
         <Box sx={{ display: "flex", flexGrow: 1 }} />
-        <Button>
+        <Button onClick={onClickOpen}>
           Read post <Icon sx={{ ml: 1 }}>arrow_forward</Icon>
         </Button>
       </CardActions>

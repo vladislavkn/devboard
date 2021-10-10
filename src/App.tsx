@@ -1,5 +1,6 @@
 import { ApolloProvider } from "@apollo/client";
 import { CssBaseline, ThemeProvider } from "@material-ui/core";
+import { SnackbarProvider } from "notistack";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import client from "./apolloClient";
 import HomeScreen from "./screens/HomeScreen";
@@ -10,12 +11,14 @@ const App: React.FC = () => (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <Switch>
-          <Route path="/" exact component={HomeScreen} />
-          <Route path="/tags" exact component={TagsScreen} />
-        </Switch>
-      </BrowserRouter>
+      <SnackbarProvider maxSnack={3} dense preventDuplicate>
+        <BrowserRouter>
+          <Switch>
+            <Route path="/" exact component={HomeScreen} />
+            <Route path="/tags" exact component={TagsScreen} />
+          </Switch>
+        </BrowserRouter>
+      </SnackbarProvider>
     </ThemeProvider>
   </ApolloProvider>
 );
