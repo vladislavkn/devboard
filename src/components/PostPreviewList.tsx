@@ -1,5 +1,4 @@
 import { Box } from "@material-ui/core";
-import { useSnackbar } from "notistack";
 import { Post } from "../generated/graphql";
 import AppInfiniteScroll from "./AppInfiniteScroll";
 import PostPreview from "./PostPreview";
@@ -7,20 +6,12 @@ import PostPreview from "./PostPreview";
 type PostPreviewListProps = {
   posts: Post[];
   onFetchMore: () => void;
+  onOpenPost: (post: Post) => void;
   hasMore: boolean;
 };
 
 const PostPreviewList: React.FC<PostPreviewListProps> = (props) => {
-  const { posts, onFetchMore, hasMore } = props;
-
-  const { enqueueSnackbar } = useSnackbar();
-
-  const handleOpenPost = () => {
-    enqueueSnackbar("Page is not implemented yet", {
-      variant: "info",
-      autoHideDuration: 2000,
-    });
-  };
+  const { posts, onFetchMore, onOpenPost, hasMore } = props;
 
   return (
     <AppInfiniteScroll
@@ -32,9 +23,9 @@ const PostPreviewList: React.FC<PostPreviewListProps> = (props) => {
       {posts.map((post) => (
         <PostPreview
           post={post}
-          onClickOpen={handleOpenPost}
-          key={post.id}
+          onClickOpen={() => onOpenPost(post)}
           sx={{ mb: 1 }}
+          key={post.id}
         />
       ))}
     </AppInfiniteScroll>

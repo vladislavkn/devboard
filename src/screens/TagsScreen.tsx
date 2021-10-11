@@ -1,4 +1,5 @@
 import { Icon, IconButton } from "@material-ui/core";
+import { useSnackbar } from "notistack";
 import { useMemo, useState } from "react";
 import BackButton from "../components/BackButton";
 import Navigation from "../components/Navigation";
@@ -10,6 +11,7 @@ import usePagedQuery from "../hooks/usePagedQuery";
 import queryTags, { QueryTags } from "../queries/queryTags";
 
 const TagsScreen: React.FC = () => {
+  const { enqueueSnackbar: toast } = useSnackbar();
   const [swapValue, setSwapValue] = useState(true);
   const [search, setSearch] = useState("");
   const [selectedTagIds, setSelectedTagIds] = useState<string[]>([]);
@@ -17,6 +19,8 @@ const TagsScreen: React.FC = () => {
     query: queryTags,
     pageSize: 18,
     hasMore: (result) => result.data.tags.length > 0,
+    onError: (e) =>
+      toast(e.message, { variant: "error", autoHideDuration: 5000 }),
   });
 
   const handleClickTag = (tag: Tag) => {
@@ -34,8 +38,10 @@ const TagsScreen: React.FC = () => {
   }, [search, data]);
 
   const handleRefresh = () => {
-    refresh();
-    window.scrollTo(0, 0);
+    refresh().then(() => {
+      toast("Refreshed tags successfully", { variant: "success" });
+      window.scrollTo(0, 0);
+    });
   };
 
   return (

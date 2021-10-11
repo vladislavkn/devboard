@@ -1,17 +1,19 @@
-import { ApolloQueryResult, useQuery } from "@apollo/client";
+import { ApolloError, ApolloQueryResult, useQuery } from "@apollo/client";
 import { useRef, useState } from "react";
 
 type Query = Parameters<typeof useQuery>[0];
+
+type QueryVars = Record<string, number | string>;
 type PagedQueryVars = {
   page: number;
   per_page: number;
-};
-type QueryVars = Record<string, any>;
+} & QueryVars;
 type UsePagedQueryOptions<T> = {
   query: Query;
   hasMore: (data: ApolloQueryResult<T>) => boolean;
   pageSize?: number;
-  variables?: QueryVars;
+  variables?: PagedQueryVars;
+  onError?: (error: ApolloError) => void;
 };
 
 const usePagedQuery = <T>(options: UsePagedQueryOptions<T>) => {
@@ -27,10 +29,7 @@ const usePagedQuery = <T>(options: UsePagedQueryOptions<T>) => {
         per_page: pageSize,
         ...options.variables,
       },
-      onError: (e) => {
-        alert(e.message);
-        console.error(e);
-      },
+      onError: options.onError,
     }
   );
 
@@ -46,7 +45,7 @@ const usePagedQuery = <T>(options: UsePagedQueryOptions<T>) => {
 
   const handleRefresh = (variables: QueryVars = {}) => {
     page.current = 1;
-    refetch({
+    return refetch({
       page: page.current,
       per_page: pageSize,
       ...options.variables,
@@ -54,7 +53,12 @@ const usePagedQuery = <T>(options: UsePagedQueryOptions<T>) => {
     });
   };
 
-  return { data, fetchMore: handleFetchMore, hasMore, refresh: handleRefresh };
+  return {
+    data,
+    fetchMore: handleFetchMore,
+    hasMore,
+    refresh: handleRefresh,
+  };
 };
 
 export default usePagedQuery;

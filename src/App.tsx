@@ -11,7 +11,12 @@ const App: React.FC = () => (
   <ApolloProvider client={client}>
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <SnackbarProvider maxSnack={3} dense preventDuplicate>
+      <SnackbarProvider
+        maxSnack={3}
+        autoHideDuration={2000}
+        dense
+        preventDuplicate
+      >
         <BrowserRouter>
           <Switch>
             <Route path="/" exact component={HomeScreen} />
